@@ -1,0 +1,8 @@
+regression
+https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data
+
+logistic 
+https://www.kaggle.com/c/titanic/data
+
+time series: RNN
+https://www.kaggle.com/c/rossmann-store-sales/data
