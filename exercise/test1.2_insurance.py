@@ -1,32 +1,33 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb  3 23:36:32 2021
+
+@author: she84
+"""
+
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import LabelBinarizer
 import matplotlib.pyplot as plt
 from pandas.plotting  import scatter_matrix
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-# Get the Data
-insurance = pd.read_csv("../data/lec03-insurance.csv") 
-# insurance.info()
-# insurance.describe()   #can't run
-data = insurance.dropna()
-# data.info()
 
-# data pregressing
 
-# Create a Test Set
-test_ratio = 1
-# For illustration only. Sklearn has train_test_split()
-def split_train_test(data, test_ratio):
-    # to make this notebook's output identical at every run
-    np.random.seed(42)  
-    shuffled_indices = np.random.permutation(len(data))
-    test_set_size = int(len(data) * test_ratio)
-    test_indices = shuffled_indices[:test_set_size]
-    train_indices = shuffled_indices[test_set_size:]
+# # Create a Test Set
+# test_ratio = 1
+# # For illustration only. Sklearn has train_test_split()
+# def split_train_test(data, test_ratio):
+#     # to make this notebook's output identical at every run
+#     np.random.seed(42)  
+#     shuffled_indices = np.random.permutation(len(data))
+#     test_set_size = int(len(data) * test_ratio)
+#     test_indices = shuffled_indices[:test_set_size]
+#     train_indices = shuffled_indices[test_set_size:]
 
-train_set, test_set = split_train_test(data, 0.2)
-print(len(train_set), "train +", len(test_set), "test", ' = total ',  len(train_set) + len(test_set))
+# train_set, test_set = split_train_test(data, 0.2)
+# print(len(train_set), "train +", len(test_set), "test", ' = total ',  len(train_set) + len(test_set))
 
 
 
