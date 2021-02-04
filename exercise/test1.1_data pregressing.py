@@ -1,11 +1,9 @@
 import pandas as pd
-import numpy as np
 from sklearn.preprocessing import LabelBinarizer
 
 # input the Data
 data = pd.read_csv("../data/lec03-insurance.csv") 
 # data.info()
-# print(data.describe())
 
 # =============================================================================
 # # 1.data pregressing
@@ -17,8 +15,9 @@ data = pd.read_csv("../data/lec03-insurance.csv")
 
 insurance = data.dropna()
 insurance = insurance.reset_index(drop=True)
-# insurance.info()
-# print(insurance.shape)
+#insurance.info()
+#print(data.describe())
+#print(insurance.shape)
 
 
 # encoding with OneHotEncoding
@@ -36,6 +35,15 @@ region_df = pd.DataFrame(region_cat, columns = ['rgNE', 'rgNW', 'rgSE','rgSW'])
 
 insurance1 = pd.concat([sex_df,insurance_num, smoker_df, region_df], axis=1)
 # insurance1 = pd.merge(insurance_num, sex_df, smoker_df, region_df)
+
+# observe the correlation of variable!!
+insurance1_corr = insurance1.corr()
+# how?
+
+
+
+
+
 
 
 
