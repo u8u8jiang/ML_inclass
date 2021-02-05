@@ -62,8 +62,8 @@ step2 =  parameter_vector[7]
 step_no = parameter_vector[8]
 hours = parameter_vector[9]
 time_limit = 3600 * hours # by hour
-direc = 'parameter' + str(parameter_vector[10])
-if not os.path.exists(direc): 
+direc = 'parameter' + str(parameter_vector[10])   #產生新檔
+if not os.path.exists(direc):   
     os.makedirs(direc)
 
 
@@ -109,7 +109,7 @@ for file_no in range(10): #  files
     valid_scores = np.zeros((step_no, step_no ))
     
     t = time.time()
-    for alpha in range(step_no):
+    for alpha in range(step_no):   #step_no=?
         for Lambda in range(step_no): 
             if parameter_vector[-1]  == 'ConstantSplit': 
                 coef = ConstantSplit(file_no, X_train, y_train,  warm_start, alpha, Lambda, parameter_vector)
@@ -123,7 +123,7 @@ for file_no in range(10): #  files
     
     timing[file_no] = (time.time() - t ) / (step_no *step_no)
     out.append(['Jobs done in seconds', time.time()-t])
-    out.append(['MAE of training dataset', train_scores])
+    out.append(['MAE of training dataset', train_scores])   
     out.append(['MAE of validation dataset', valid_scores])
     # testing stage
     position = find_max_index(valid_scores)
@@ -145,7 +145,7 @@ for file_no in range(10): #  files
     late_hours_test[file_no]  = early_late[3] 
 # In[ ]:
 
-file1 = open(direc  + "/output" + str(parameter) + ".txt","a") 
+file1 = open(direc  + "/output" + str(parameter) + ".txt","a")  #a:附加
 
 file1.write("\naccuracy_train\n")
 file1.write(str(np.round(HR_train, decimals=4)))
