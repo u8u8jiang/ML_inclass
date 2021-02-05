@@ -4,6 +4,8 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from pandas.plotting  import scatter_matrix
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import numpy as np
 
 # input the Data
 data = pd.read_csv("../data/lec03-insurance.csv") 
@@ -85,19 +87,24 @@ corr1_matrix = insurance1.corr()
 # Create a linear regressor instance
 lr = LinearRegression(normalize=True)
 lr.fit(X_train, Y_train)
-predicted_y = lr.intercept_
+
 
 #the score of training data
 print( "Score {:.4f}".format(lr.score(X_train, Y_train)) )  
 # the regression of intercept ie.beta
 print('y = %.3f '% lr.intercept_)
 for i, c in enumerate(lr.coef_):
-    print('%.3f '% c, trainingset.columns.values[i])
-# the regression of predicted_y   
+    print('%.3f '% c, X_train.columns.values[i])
+
+# the regression of predicted_y  
+predicted_y = lr.intercept_
+for i, c in enumerate(lr.coef_):
+    predicted_y += c * X_train.iloc[3][i]
 print('predicted y = %.3f '% predicted_y)
 
-from sklearn.metrics import mean_squared_error
-print(np.sqrt( mean_squared_error(insurance_labels, lr.predict(insurance1) )))
+
+
+#print(np.sqrt(mean_squared_error(X_train, lr.predict(Y_train) )))
 
 
 
