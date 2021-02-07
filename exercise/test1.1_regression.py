@@ -1,11 +1,12 @@
 import pandas as pd
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import LabelBinarizer, StandardScaler
 from sklearn.model_selection import train_test_split 
 import matplotlib.pyplot as plt
 from pandas.plotting  import scatter_matrix
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import numpy as np
+import statsmodels.api as sm
 
 # input the Data
 data = pd.read_csv("../data/lec03-insurance.csv") 
@@ -40,6 +41,8 @@ smoker_df = pd.DataFrame(smoker_cat, columns = ['smoker'])
 region_df = pd.DataFrame(region_cat, columns = ['rgNE', 'rgNW', 'rgSE','rgSW'])
 
 insurance1 = pd.concat([sex_df, smoker_df, region_df,insurance_num], axis=1)
+insurance_X = insurance1.drop(['charges'], axis=1)
+insurance_Y = insurance1["charges"].copy()
 # insurance1 = pd.merge(insurance_num, sex_df, smoker_df, region_df)
 
 
@@ -52,6 +55,7 @@ corrwcharge = insurance1.corr()['charges'].sort_values(ascending = False)
 X_train, X_test, Y_train, Y_test = train_test_split(insurance1.iloc[:, 0:9], insurance1.iloc[:, 9], test_size=0.2, random_state = 42)
 trainingset = pd.concat([X_train,Y_train], axis=1)
 testingset = pd.concat([X_test,Y_test], axis=1)
+
 
 # =============================================================================
 # # 2.visualization and observation
@@ -89,24 +93,29 @@ lr = LinearRegression(normalize=True)
 lr.fit(X_train, Y_train)
 
 
+
+
 #the score of training data
-print( "Score {:.4f}".format(lr.score(X_train, Y_train)) )  
+print( "Score {:.4f}".format(lr.score(X_train, Y_train)) )  # 0.7604
 # the regression of intercept ie.beta
 print('y = %.3f '% lr.intercept_)
 for i, c in enumerate(lr.coef_):
     print('%.3f '% c, X_train.columns.values[i])
 
-# the regression of predicted_y  
-predicted_y = lr.intercept_
-for i, c in enumerate(lr.coef_):
-    predicted_y += c * X_train.iloc[3][i]
-print('predicted y = %.3f '% predicted_y)
+
+predicted_y = lr.predict(insurance_X)
+print(np.sqrt(mean_squared_error(insurance_Y, lr.predict(insurance_X))))
 
 
 
-#print(np.sqrt(mean_squared_error(X_train, lr.predict(Y_train) )))
+# ss2 = StandardScaler()
+# insurance2 = ss2.fit_transform(insurance1) #scaled z-score
+# lr2 = LinearRegression(normalize=False)
+# lr2.fit(X_train, Y_train)
 
-
+# X2 = sm.add_constant(X_train)
+# est = sm.OLS(Y_train, X2).fit()
+# print(est.summary())
 
 
 
